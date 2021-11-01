@@ -23,6 +23,7 @@ export default async function handler(req, res) {
             amount: request.amount,
             payer_email: request.payer_email,
             description: request.description,
+            success_redirect_url: request.success_redirect_url
         }),
     });
     const data = await resp.json();
