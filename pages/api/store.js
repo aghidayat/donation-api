@@ -1,10 +1,17 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import Cors from 'cors';
+import initMiddleware from '../../lib/init-middleware';
+
+// Initialize the cors middleware
+const cors = initMiddleware(
+    // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+    Cors({
+        // Only allow requests with GET, POST and OPTIONS
+        methods: ['GET', 'POST', 'OPTIONS'],
+    })
+);
 
 export default async function handler(req, res) {
-    // if (req.method !== 'POST') {
-    //     res.status(405).send({ message: 'Only POST requests allowed' });
-    //     return;
-    // }
+    await cors(req, res);
 
     const request = req.body;
 
@@ -23,7 +30,7 @@ export default async function handler(req, res) {
             amount: request.amount,
             payer_email: request.payer_email,
             description: request.description,
-            success_redirect_url: request.success_redirect_url
+            success_redirect_url: request.success_redirect_url,
         }),
     });
     const data = await resp.json();
